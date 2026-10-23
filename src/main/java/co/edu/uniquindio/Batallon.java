@@ -47,7 +47,7 @@ public class Batallon {
         boolean eliminado = false;
         Vehiculo vehiculoAEliminar = buscarVehiculo(id);
 
-        if (vehiculoAEliminar != null) {
+        if (vehiculoAEliminar != null && vehiculoAEliminar.estadoOperativo == EstadoOperativo.DISPONIBLE) {
 
             boolean asociadoAMision = false;
             for (Mision mision : listaMision) {
@@ -157,6 +157,16 @@ public class Batallon {
             }
         }
         return resultado;
+    }
+
+    public ArrayList<Mision> obtenerMisionesCompletadas() {
+        ArrayList<Mision> completadas = new ArrayList<>();
+        for (Mision mision : listaMision) {
+            if (mision.getEstado() == EstadoMision.COMPLETADA) {
+                completadas.add(mision);
+            }
+        }
+        return completadas;
     }
 
     public ArrayList<Vehiculo> getListaVehiculos() {

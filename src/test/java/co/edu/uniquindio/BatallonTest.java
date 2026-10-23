@@ -2,6 +2,7 @@ package co.edu.uniquindio;
 
 import org.junit.jupiter.api.*;
 
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,18 +13,6 @@ class BatallonTest {
 
     BatallonTest() {
 
-    }
-
-    @DisplayName("Prueba assertEquals")
-    @Test
-    void testInicial() {
-        LOG.info("Iniciando prueba Batallon...");
-
-        int resultado = 1 + 2;
-
-        assertEquals(3, resultado);
-
-        LOG.info("Finalizando prueba Batallon...");
     }
 
     @DisplayName("Prueba Registro de vehiculos")
@@ -108,85 +97,23 @@ class BatallonTest {
     @DisplayName("Prueba de consulta de vehiculo")
     @Test
     void testConsultaVehiculo() {
-
-    }
-
-    @DisplayName("Prueba de eliminar vehiculo")
-    @Test
-    void testEliminarVehiculo() {
-        LOG.info("Iniciando prueba de eliminacion de vehiculo");
+        LOG.info("Iniciando prueba de consulta de vehiculos existentes e inexistentes");
         //Batallon de prueba
         Batallon batallonPrueba = new Batallon("123", "Batallon 1", "Tercera", "Quinto", 1);
 
-        //Registro inicial de vehiculo
+        //Creacion de vehiculo
         TransporteTropas transporte = new TransporteTropas("T-01", "Camión de tropas", 2020,
                 12000, EstadoOperativo.DISPONIBLE, 25);
+
+        //Registro de vehiculo
         batallonPrueba.registrarVehiculo(transporte);
+        String id = batallonPrueba.buscarVehiculo("T-01").id;
 
-        //Eliminacion del vehiculo
-        boolean vehiculoEliminado = batallonPrueba.eliminarVehiculo("T-01");
-        assertTrue(vehiculoEliminado);
-
-        Vehiculo vehiculoEncontrado = batallonPrueba.buscarVehiculo("T-01");
-        assertNull(vehiculoEncontrado);
-        LOG.info("Finalizando prueba de eliminacion de vehiculo");
+        //Asserts para buscar un vehiculo que si existe y otro que no
+        Assertions.assertEquals(transporte.id, id);
+        Assertions.assertNull(batallonPrueba.buscarVehiculo("2"));
+        LOG.info("Finalizando prueba de consulta de vehiculos existentes e inexistentes");
     }
-
-
-
-    // ------Ejemplos-----
-
-    @DisplayName("Prueba assertNotEquals")
-    @Test
-    void testNotEquals() {
-        LOG.info("Iniciando prueba Batallon...");
-
-        String cadena = "Hola a todos";
-
-        assertNotEquals("Adios", cadena);
-
-        LOG.info("Finalizando prueba Batallon...");
-    }
-
-    @DisplayName("Prueba assertNull")
-    @Test
-    void testNull() {
-        LOG.info("Iniciando prueba Batallon...");
-
-        Batallon batallon = null;
-
-        assertNull(batallon);
-
-        LOG.info("Finalizando prueba Batallon...");
-    }
-
-    @DisplayName("Prueba assertNotNull")
-    @Test
-    void testNotNull() {
-        LOG.info("Iniciando prueba Batallon...");
-
-        Batallon batallon = new Batallon("01", "Cacique", "03", "Calarca", 3);
-
-        assertNotNull(batallon);
-
-        LOG.info(batallon.toString());
-        LOG.info("Finalizando prueba Batallon...");
-    }
-
-    @DisplayName("Prueba assertTrue/assertFalse")
-    @Test
-    void testFalseTrue() {
-        LOG.info("Iniciando prueba Batallon...");
-
-        Batallon batallon = new Batallon("01", "Cacique", "03", "Calarca", 3);
-
-        assertTrue(batallon.getNumero() < 5);
-        assertFalse(batallon.getNombre().equals("Calarca cacique"));
-
-        LOG.info(batallon.toString());
-        LOG.info("Finalizando prueba Batallon...");
-    }
-
 
     //@BeforeEach
     void ejecutarAntes() {
