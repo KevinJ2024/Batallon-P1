@@ -67,8 +67,8 @@ class BatallonTest {
 
     @DisplayName("Prueba de Registro sin ID repetido")
     @Test
-    void testRegistroVehiculoId() {
-        LOG.info("Iniciando prueba de registro de vehiculo considerando id repetido");
+    void testRegistroVehiculoTrue() {
+        LOG.info("Iniciando prueba de registro de vehiculo considerando id repetido validando que sea true");
         //Batallon de prueba
         Batallon batallonPrueba = new Batallon("123", "Batallon 1", "Tercera", "Quinto", 1);
 
@@ -80,8 +80,59 @@ class BatallonTest {
         boolean registroVehiculo = batallonPrueba.registrarVehiculo(transporte);
 
         assertTrue(registroVehiculo);
-        LOG.info("Finalizando prueba de registro de vehiculo con id repetido");
+        LOG.info("Finalizando prueba de registro de vehiculo con id repetido validando que sea true");
     }
+
+    @DisplayName("Prueba de retorno false registro de vehiculo")
+    @Test
+    void testRegistroVehiculoFalse() {
+        LOG.info("Iniciando prueba de registro de vehiculo considerando id repetido validando que sea false");
+        //Batallon de prueba
+        Batallon batallonPrueba = new Batallon("123", "Batallon 1", "Tercera", "Quinto", 1);
+
+        //Creacion de Vehiculo
+        TransporteTropas transporte = new TransporteTropas("T-01", "Camión de tropas", 2020,
+                12000, EstadoOperativo.DISPONIBLE, 25);
+        Blindado blindado = new Blindado("T-01", "Vehículo blindado", 2021,
+                8000, EstadoOperativo.DISPONIBLE, 4);
+
+        //Registro de vehiculo
+        batallonPrueba.registrarVehiculo(transporte);
+        //Registro de otro vehiculo con mismo id del anterior
+        boolean registroVehiculoBlindado = batallonPrueba.registrarVehiculo(blindado);
+
+        assertFalse(registroVehiculoBlindado);
+        LOG.info("Finalizando prueba de registro de vehiculo con id repetido validando que sea false");
+    }
+
+    @DisplayName("Prueba de consulta de vehiculo")
+    @Test
+    void testConsultaVehiculo() {
+
+    }
+
+    @DisplayName("Prueba de eliminar vehiculo")
+    @Test
+    void testEliminarVehiculo() {
+        LOG.info("Iniciando prueba de eliminacion de vehiculo");
+        //Batallon de prueba
+        Batallon batallonPrueba = new Batallon("123", "Batallon 1", "Tercera", "Quinto", 1);
+
+        //Registro inicial de vehiculo
+        TransporteTropas transporte = new TransporteTropas("T-01", "Camión de tropas", 2020,
+                12000, EstadoOperativo.DISPONIBLE, 25);
+        batallonPrueba.registrarVehiculo(transporte);
+
+        //Eliminacion del vehiculo
+        boolean vehiculoEliminado = batallonPrueba.eliminarVehiculo("T-01");
+        assertTrue(vehiculoEliminado);
+
+        Vehiculo vehiculoEncontrado = batallonPrueba.buscarVehiculo("T-01");
+        assertNull(vehiculoEncontrado);
+        LOG.info("Finalizando prueba de eliminacion de vehiculo");
+    }
+
+
 
     // ------Ejemplos-----
 

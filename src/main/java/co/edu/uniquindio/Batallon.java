@@ -42,6 +42,35 @@ public class Batallon {
         return encontrado;
     }
 
+    //Nuevo metodo para eliminar un vehiculo -------
+    public boolean eliminarVehiculo(String id) {
+        boolean eliminado = false;
+        Vehiculo vehiculoAEliminar = buscarVehiculo(id);
+
+        if (vehiculoAEliminar != null) {
+
+            boolean asociadoAMision = false;
+            for (Mision mision : listaMision) {
+                for (DetalleMision detalle : mision.getListaDetallesMision()) {
+                    if (detalle.getVehiculo() != null && detalle.getVehiculo().getId().equals(vehiculoAEliminar.getId())) {
+                        asociadoAMision = true;
+                        break;
+                    }
+                }
+                if (asociadoAMision) {
+                    break;
+                }
+            }
+
+            if (!asociadoAMision) {
+                listaVehiculos.remove(vehiculoAEliminar);
+                eliminado = true;
+            }
+        }
+
+        return eliminado;
+    }
+
     public boolean registrarMision(Mision mision) {
         boolean registrada = false;
         if (mision != null && mision.esValida() && buscarMision(mision.getId()) == null
