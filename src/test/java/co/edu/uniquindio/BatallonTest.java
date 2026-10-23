@@ -68,7 +68,7 @@ class BatallonTest {
     @DisplayName("Prueba de Registro sin ID repetido")
     @Test
     void testRegistroVehiculoId() {
-        LOG.info("Iniciando prueba de registro de vehiculo");
+        LOG.info("Iniciando prueba de registro de vehiculo considerando id repetido");
         //Batallon de prueba
         Batallon batallonPrueba = new Batallon("123", "Batallon 1", "Tercera", "Quinto", 1);
 
@@ -80,6 +80,7 @@ class BatallonTest {
         boolean registroVehiculo = batallonPrueba.registrarVehiculo(transporte);
 
         assertTrue(registroVehiculo);
+        LOG.info("Finalizando prueba de registro de vehiculo con id repetido");
     }
 
     // ------Ejemplos-----
